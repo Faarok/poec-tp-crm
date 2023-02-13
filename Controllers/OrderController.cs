@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class OrderController : ControllerBase
 {
+    CrmContext context = new();
+
     [HttpGet("{id}")]
     public Order Get(int id)
     {
-        return RepoTools.repoOrder.Read(id);
+        Order order = RepoTools.repoOrder.Read(id);
+        order.Client = RepoTools.repoClient.Read(order.ClientID);
+        return order;
     }
 
     [HttpPost("add")]
@@ -25,12 +29,12 @@ public class OrderController : ControllerBase
         Order order = RepoTools.repoOrder.Read(id);
 
         order.TypePresta = updatedOrder.TypePresta;
-        order.ClientName = updatedOrder.ClientName;
         order.NbJours = updatedOrder.NbJours;
         order.TjmHt = updatedOrder.TjmHt;
         order.TVA = updatedOrder.TVA;
         order.State = updatedOrder.State;
         order.Comment = updatedOrder.Comment;
+        order.ClientID = updatedOrder.ClientID;
 
         return RepoTools.repoOrder.Read(id);
     }

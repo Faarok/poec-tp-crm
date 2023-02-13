@@ -4,7 +4,6 @@ public class Order {
 
     public int ID { get; set; }
     public string TypePresta { get; set; } = null!;
-    public string ClientName { get; set; } = null!;
     public int NbJours { get; set; }
     public double TjmHt { get; set; }
     public int TVA { get; set; }
