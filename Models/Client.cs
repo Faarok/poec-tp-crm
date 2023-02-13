@@ -8,7 +8,7 @@ public class Client {
     public int TVA { get; set; }
     public double TotalCaHt { get; set; }
     public string Comment { get; set; } = null!;
-    public List<Order>? OrderList;
+    public List<Order> OrderList = new();
 
     public Client()
     {

@@ -1,8 +1,9 @@
 namespace Crm;
 
-public class RepoTools
+public static class RepoTools
 {
-    public static Repository<Client> repoClient = new();
-    public static Repository<Order> repoOrder = new();
-    public static Repository<User> repoUser = new();
+    public static CrmContext context = new();
+    public static Repository<Client> repoClient = new Repository<Client>(context);
+    public static Repository<Order> repoOrder = new Repository<Order>(context);
+    public static Repository<User> repoUser = new Repository<User>(context);
 }

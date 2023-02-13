@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 public class Repository<T> where T : class
 {
-    private static CrmContext _db = new CrmContext();
+    private CrmContext _db;
     private DbSet<T> _table;
 
-    public Repository()
+    public Repository(CrmContext db)
     {
-        _table = _db.Set<T>();
+        this._db = db;
+        this._table = _db.Set<T>();
         Console.WriteLine("Le repository " + typeof(T) + " est créé");
     }
 
@@ -35,16 +36,14 @@ public class Repository<T> where T : class
 
     public T Read(int id)
     {
-        try
+        T row = _table.Find(id)!;
+
+        if(row != null)
         {
-            T row = _table.Find(id)!;
             return row;
         }
-        catch (Exception e)
-        {
-            System.Console.WriteLine("Ligne introuvable. Vérifier l'ID.");
-            throw e;
-        }
+
+        throw new Exception("Aucune ligne associée à cet ID.");
     }
 
     public List<T> ReadAll()

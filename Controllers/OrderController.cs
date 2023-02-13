@@ -6,9 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class OrderController : ControllerBase
 {
+
     [HttpGet]
     public List<Order> Get()
     {
+        foreach(var item in RepoTools.repoOrder.ReadAll())
+        {
+            if(RepoTools.repoClient.Read(item.ClientID) != null)
+            {
+                item.Client = RepoTools.repoClient.Read(item.ClientID)!;
+            }
+        }
+
         return RepoTools.repoOrder.ReadAll();
     }
 
@@ -23,6 +32,7 @@ public class OrderController : ControllerBase
     {
         newOrder.Client = RepoTools.repoClient.Read(newOrder.ClientID);
         RepoTools.repoOrder.Create(newOrder);
+        
         return RepoTools.repoOrder.ReadAll();
     }
 
