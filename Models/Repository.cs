@@ -57,5 +57,24 @@ public class Repository<T> where T : class
         _db.SaveChanges();
     }
 
-
+    public void Delete(int id)
+    {
+        using (var transaction = _db.Database.BeginTransaction())
+        {
+            try
+            {
+                // Les actions à faire sur la BDD
+                T row = _table.Find(id)!;
+                _table.Remove(row);
+                _db.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Impossible de supprimer la ligne.");
+                transaction.Rollback();
+                throw e;
+            }
+        }
+    }
 }
