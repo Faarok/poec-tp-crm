@@ -10,10 +10,9 @@ public class Order {
     public string State { get; set; } = null!;
     public string Comment { get; set; } = null!;
     public int ClientID { get; set; }
-    public Client Client { get; set; } = null!;
+    public Client? Client { get; set; }
 
     public Order()
     {
-         
     }
 }

@@ -6,6 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class ClientController : ControllerBase
 {
+    [HttpGet]
+    public List<Client> Get()
+    {
+        return RepoTools.repoClient.ReadAll();
+    }
+    
     [HttpGet("{id}")]
     public Client Get(int id)
     {

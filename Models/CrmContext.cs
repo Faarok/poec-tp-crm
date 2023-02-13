@@ -22,6 +22,7 @@ public class CrmContext : DbContext {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Order>()
-            .HasOne(c => c.Client).WithMany(o => o.OrderList);
+            .HasOne(c => c.Client)
+            .WithMany(o => o.OrderList);
     }
 }

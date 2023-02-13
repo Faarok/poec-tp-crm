@@ -6,20 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 [Route("[controller]")]
 public class OrderController : ControllerBase
 {
-    CrmContext context = new();
+    [HttpGet]
+    public List<Order> Get()
+    {
+        return RepoTools.repoOrder.ReadAll();
+    }
 
     [HttpGet("{id}")]
     public Order Get(int id)
     {
-        Order order = RepoTools.repoOrder.Read(id);
-        order.Client = RepoTools.repoClient.Read(order.ClientID);
-        return order;
+        return RepoTools.repoOrder.Read(id);
     }
 
     [HttpPost("add")]
-    public List<Order> Post(Order order)
+    public List<Order> Post(Order newOrder)
     {
-        RepoTools.repoOrder.Create(order);
+        newOrder.Client = RepoTools.repoClient.Read(newOrder.ClientID);
+        RepoTools.repoOrder.Create(newOrder);
         return RepoTools.repoOrder.ReadAll();
     }
 
