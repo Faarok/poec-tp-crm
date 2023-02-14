@@ -10,11 +10,11 @@ public class OrderController : ControllerBase
     [HttpGet]
     public List<Order> Get()
     {
-        foreach(var item in RepoTools.repoOrder.ReadAll())
+        foreach(var order in RepoTools.repoOrder.ReadAll())
         {
-            if(RepoTools.repoClient.Read(item.ClientID) != null)
+            if(RepoTools.repoClient.Read(order.ClientID) != null)
             {
-                item.Client = RepoTools.repoClient.Read(item.ClientID)!;
+                order.Client = RepoTools.repoClient.Read(order.ClientID);
             }
         }
 
@@ -40,6 +40,7 @@ public class OrderController : ControllerBase
     public Order Put(int id, Order updatedOrder)
     {
         Order order = RepoTools.repoOrder.Read(id);
+        updatedOrder.Client = RepoTools.repoClient.Read(updatedOrder.ClientID);
 
         order.TypePresta = updatedOrder.TypePresta;
         order.NbJours = updatedOrder.NbJours;
@@ -48,6 +49,7 @@ public class OrderController : ControllerBase
         order.State = updatedOrder.State;
         order.Comment = updatedOrder.Comment;
         order.ClientID = updatedOrder.ClientID;
+        order.Client = updatedOrder.Client;
 
         return RepoTools.repoOrder.Read(id);
     }

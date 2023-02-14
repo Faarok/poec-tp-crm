@@ -22,7 +22,7 @@ public class ClientController : ControllerBase
     public List<Client> Get(Client client)
     {
         RepoTools.repoClient.Create(client);
-        return RepoTools.repoClient.ReadAll();
+        return Get();
     }
 
     [HttpPut("edit/{id}")]
